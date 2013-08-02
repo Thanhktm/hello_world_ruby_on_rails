@@ -1,4 +1,7 @@
 class PostsController < ApplicationController
+ 
+  http_basic_authenticate_with name: "thanhnd", password: "thanhnd", expect: [:index, :show]
+ 
   def new
     @post = Post.new
   end
@@ -25,6 +28,13 @@ class PostsController < ApplicationController
     else
       render 'edit'
     end
+  end
+
+  def destroy
+    @post = Post.find(params[:id])
+    @post.destroy
+
+    redirect_to posts_path
   end
 
   def show
